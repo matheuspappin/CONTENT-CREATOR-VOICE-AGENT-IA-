@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Ferramentas IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>LALA CREATOR CONTENT</h2>
+        <button class="tab-link active" data-tab="agent-generator">Gerador de Conteúdo</button>
+        <button class="tab-link" data-tab="tts-generator">Gerador de Áudio (TTS)</button>
+        <button id="settings-btn">Configurações</button>
+
+    </div>
+
+    <div class="main-container">
+        <header class="main-header">
+            <h1>LALA CREATOR CONTENT</h1>
+        </header>
+
+        <main class="main-content">
+            <div id="agent-generator" class="tab-content active">
+                <h2>Gerador de Conteúdo com Agente Personalizado</h2>
+                <p class="tool-description">Defina a persona do seu agente e o pedido de conteúdo para gerar 6 variações de narrativas, títulos, descrições e tags.</p>
+                <form id="customAgentForm">
+                    <div class="form-group">
+                        <label for="agentPremise">Premissa do Agente:</label>
+                        <textarea id="agentPremise" rows="3" placeholder="Ex: Você é um historiador especializado em civilizações antigas..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="blockStructure">Estruturação de Blocos (opcional):</label>
+                        <textarea id="blockStructure" rows="3" placeholder="Ex: Introdução, Desenvolvimento (3 parágrafos), Conclusão..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="culturalAdaptation">Adaptação Cultural (opcional):</label>
+                        <textarea id="culturalAdaptation" rows="3" placeholder="Ex: Use linguagem formal e referências da cultura romana..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="contentRequest">Pedido de Conteúdo:</label>
+                        <textarea id="contentRequest" rows="5" placeholder="Ex: Crie uma breve narrativa sobre a queda do Império Romano."></textarea>
+                    </div>
+                    <div class="button-container">
+                        <button type="button" id="generateAgentContentBtn">Gerar 6 Variações de Conteúdo</button>
+                        <button id="save-all-narratives-btn">Salvar Todas as Narrativas</button>
+                    </div>
+                    <div id="agent-loading-spinner" class="spinner-container hidden">
+                        <div class="spinner"></div>
+                        <p id="agent-progress-text"></p>
+                        <div class="progress-bar-container">
+                            <div id="agent-progress-bar" class="progress-bar"></div>
+                        </div>
+                    </div>
+                    <div id="agent-error-message" class="error-container hidden"></div>
+                </form>
+                <div id="agent-results-section">
+                    <div class="tab-buttons">
+                    </div>
+                    <div class="tab-content-container">
+                        <!-- Narrative results will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="tts-generator" class="tab-content">
+                <h2>Gerador de Áudio (TTS)</h2>
+                <form id="tts-form">
+                    <div class="form-group">
+                        <label for="text-input">Texto Longo</label>
+                        <textarea id="text-input" placeholder="Cole ou digite seu texto de até 30 minutos aqui..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="voice-select">Voz</label>
+                        <div class="voice-selection-wrapper">
+                            <select id="voice-select" required></select>
+                            <button type="button" id="test-voice-btn" title="Testar voz selecionada">▶</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="rate-slider">Velocidade (<span id="rate-value">175</span> ppm)</label>
+                        <div class="slider-container">
+                            <input type="range" id="rate-slider" min="50" max="400" value="175">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="volume-slider">Volume (<span id="volume-value">100</span>%)</label>
+                        <div class="slider-container">
+                            <input type="range" id="volume-slider" min="0" max="100" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pitch-slider">Tom de Voz (Pitch) (<span id="pitch-value">0</span>)</label>
+                        <div class="slider-container">
+                            <input type="range" id="pitch-slider" min="-20" max="20" value="0">
+                        </div>
+                    </div>
+                    <button type="submit" id="generate-btn">Iniciar Geração de Áudio</button>
+                </form>
+                <div id="result"></div>
+            </div>
+
+
+        </main>
+    </div>
+
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Configurações</h2>
+            <div class="api-key-section">
+                <h3>Configuração da API Key e Modelo</h3>
+                <div class="input-section">
+                    <label for="api-key-input">Gemini API Key:</label>
+                    <input type="password" id="api-key-input" placeholder="Sua API Key aqui...">
+                </div>
+                <div class="input-section">
+                    <label for="model-select">Selecione o Modelo Gemini:</label>
+                    <select id="model-select"><option value="">Carregando modelos...</option></select>
+                </div>
+                <button id="save-config-btn">Salvar Configuração</button>
+                <div id="config-status"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
